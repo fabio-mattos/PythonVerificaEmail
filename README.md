@@ -99,7 +99,7 @@ flowchart TD
     F -- Inválido --> G[Exibe: Email inválido]
     F -- Válido --> H[Consulta DNS (MX)]
 
-    H -- Sem MX --> I[Exibe: Domínio não recebe e-mails]
+    H --| Sem MX |--> I[Exibe: Domínio não recebe e-mails]
     H -- Com MX --> J[Verificação SMTP]
 
     J -- Aceito --> K[Exibe: OK ✔ Email existe]
