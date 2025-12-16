@@ -93,7 +93,7 @@ flowchart TD
     B --> C[Clicar em Verificar]
     C --> D{E-mail existe?}
 
-    D -- Não --> E[Exibe: Informa e-mail Não existe]
+    D -- Não --> E[Exibe: e-mail Não existe]
     D -- Sim --> F[Exibe: e-mail existe ]
 
 ```
