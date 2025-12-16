@@ -9,7 +9,7 @@ class EmailVerifierApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Verificador de E-mail")
-        self.root.geometry("420x200")
+        self.root.geometry("420x220")
         self.root.resizable(False, False)
 
         self.create_widgets()
@@ -33,11 +33,18 @@ class EmailVerifierApp:
 
     def verify_email(self):
         email = self.email_entry.get().strip()
-        self.result_label.config(text="", foreground="black")
 
         if not email:
             self.show_error("Informe um e-mail")
             return
+
+        # 🔄 Mostra status "Verificando..."
+        self.result_label.config(
+            text="🔍 Verificando e-mail...",
+            foreground="blue"
+        )
+        self.verify_button.config(state="disabled")
+        self.root.update_idletasks()  # força atualização da UI
 
         # 1️⃣ Validação de formato
         try:
@@ -46,6 +53,7 @@ class EmailVerifierApp:
             domain = email.split("@")[1]
         except EmailNotValidError:
             self.show_error("Email inválido")
+            self.verify_button.config(state="normal")
             return
 
         # 2️⃣ Verificação de MX
@@ -54,13 +62,16 @@ class EmailVerifierApp:
             mx_host = str(mx_records[0].exchange)
         except Exception:
             self.show_error("Domínio não recebe e-mails")
+            self.verify_button.config(state="normal")
             return
 
         # 3️⃣ Verificação SMTP (best effort)
         if self.smtp_check(mx_host, email):
-            self.show_success("OK ✔ Email existe")
+            self.show_success("✔ OK - Email existe")
         else:
-            self.show_error("Email não existe")
+            self.show_error("❌ Email não existe")
+
+        self.verify_button.config(state="normal")
 
     def smtp_check(self, mx_host, email):
         try:
