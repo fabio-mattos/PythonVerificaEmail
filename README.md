@@ -91,19 +91,11 @@ Códigos SMTP aceitos como válidos:
 flowchart TD
     A[Início] --> B[Usuário informa o e-mail]
     B --> C[Clicar em Verificar]
-    C --> D{E-mail informado?}
+    C --> D{E-mail existe?}
 
-    D -- Não --> E[Exibe: Informe um e-mail]
-    D -- Sim --> F[Validação de formato]
+    D -- Não --> E[Exibe: Informa e-mail Não existe]
+    D -- Sim --> F[Exibe: e-mail existe ]
 
-    F -- Inválido --> G[Exibe: Email inválido]
-    F -- Válido --> H[Consulta DNS (MX)]
-
-   H[Consulta DNS (MX)] -->|Sem| I[Domínio não possui MX]
-    H -- Com MX --> J[Verificação SMTP]
-
-    J -- Aceito --> K[Exibe: OK ✔ Email existe]
-    J -- Rejeitado --> L[Exibe: Email não existe]
 ```
 
 ---
